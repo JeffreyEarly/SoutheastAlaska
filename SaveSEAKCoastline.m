@@ -4,7 +4,7 @@
 % save('coastlines.mat','coasts');
 
 %% bounding boxes are given in lower-left, upper-right format
-load('coastlines.mat');
+load('Data/coastlines.mat');
 
 coastPolyshapes = cell(length(coasts),1);
 for i=1:length(coasts)
@@ -38,10 +38,14 @@ for i=1:length(SEAKPolys)
     SEAKProjectedPolys{i} = polyshape(x-x0,y-y0);
 end
 
-
-figure
-for i=1:length(SEAKProjectedPolys)
-    plot( SEAKProjectedPolys{i} ), hold on
+SEAKProjectedPolygons = SEAKProjectedPolys{1};
+for i=2:length(SEAKProjectedPolys)
+    SEAKProjectedPolygons = cat(1,SEAKProjectedPolygons,SEAKProjectedPolys{i});
 end
 
-save('SoutheastAlaskaProjected.mat','SEAKProjectedPolys');
+figure
+for i=1:length(SEAKProjectedPolygons)
+    plot( SEAKProjectedPolygons(i) ), hold on
+end
+
+save('SoutheastAlaskaProjected.mat','SEAKProjectedPolygons');
