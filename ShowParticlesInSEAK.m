@@ -1,40 +1,30 @@
-load('Data/SoutheastAlaskaProjected.mat');
-[xlim,ylim] = boundingbox(SEAKProjectedPolygons(1));
-for i=2:length(SEAKProjectedPolygons)
-    [xlim2,ylim2] = boundingbox(SEAKProjectedPolygons(i));
-    if xlim2(1) < xlim(1)
-        xlim(1) = xlim2(1);
-    end
-    if xlim2(2) > xlim(2)
-        xlim(2) = xlim2(2);
-    end
-    if ylim2(1) < ylim(1)
-        ylim(1) = ylim(1);
-    end
-    if ylim2(2) > ylim(2)
-        ylim(2) = ylim2(2);
-    end
-end
+model = SoutheastAlaskaMercatorModel();
 
+% plot(scale(model.obstacles,1/model.visualScale),'FaceColor','black','FaceAlpha',1.0)
 
-model = KinematicModel();
-model.obstacles = SEAKProjectedPolygons;
-model.xVisLim = xlim;
-model.yVisLim = ylim;
+% Release near Berner's Bay
+% x0 = 99000*ones(20,1);
+% y0 = 60000*ones(20,1);
 
-
-
-x0 = 99000*ones(100,1);
-y0 = 60000*ones(100,1);
+% Release near Glacier Bay
+x0 = 41e3*ones(20,1);
+y0 = 9e3*ones(20,1);
 
 kappa = 20;
 integrator = AdvectionDiffusionIntegrator(model,kappa);
 
-T = 86400;
+T = 4*86400;
 dt = 864;
 
 [t,x,y] = integrator.particleTrajectories(x0,y0,T,dt);
 
+
 figure
-plot(scale(model.obstacles,1e-3)), hold on
+% plot(scale(model.obstacles,1e-3)), hold on
+model.plotVelocityField(0), hold on
 model.plotTrajectories(x,y,'LineWidth',1.5)
+axis equal
+xlim([-40 80])
+ylim([-30 90])
+
+% print('-dpng', '-r300', 'TrajectoriesWithDiffusion.png')
