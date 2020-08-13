@@ -21,10 +21,10 @@ dt = 864;
 
 figure
 % plot(scale(model.obstacles,1e-3)), hold on
-model.plotVelocityField(0), hold on
+model.plotVelocityField(150*86400), hold on
 model.plotTrajectories(x,y,'LineWidth',1.5)
 axis equal
-xlim([-40 80])
-ylim([-30 90])
+% xlim([-40 80])
+% ylim([-30 90])
 
 % print('-dpng', '-r300', 'TrajectoriesWithDiffusion.png')

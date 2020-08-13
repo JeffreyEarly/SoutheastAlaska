@@ -33,7 +33,7 @@ classdef SoutheastAlaskaMercatorModel < KinematicModel
                     xlim(2) = xlim2(2);
                 end
                 if ylim2(1) < ylim(1)
-                    ylim(1) = ylim(1);
+                    ylim(1) = ylim2(1);
                 end
                 if ylim2(2) > ylim(2)
                     ylim(2) = ylim2(2);
